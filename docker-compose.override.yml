@@ -1,0 +1,132 @@
+version: '3.3'
+
+services:
+
+  jackett:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+     - TZ=${GLOB_TZ}
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+     - ${GLOB_VOL_LOCALTIME}
+     
+  lidarr:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+    depends_on:
+     - vpn_transmission
+     - jackett
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+     - ${GLOB_VOL_LOCALTIME}
+     
+  muximux:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+     - TZ=${GLOB_TZ}
+    depends_on:
+     - plex
+     - ombi
+     - sonarr
+     - radarr
+     - lidarr
+    networks:
+     - media-network
+    restart: unless-stopped
+     
+  ombi:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+     - TZ=${GLOB_TZ}     
+    depends_on:
+     - plex
+     - sonarr
+     - radarr
+    networks:
+     - media-network
+    restart: unless-stopped
+    
+  plex:
+    environment:
+     - TZ=${GLOB_TZ}
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+     - ${GLOB_VOL_LOCALTIME}
+     
+  plexredirect:
+    environment:
+     - TZ=${GLOB_TZ}
+    depends_on:
+     - plex
+     - ombi
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+     - ${GLOB_VOL_LOCALTIME}    
+  
+  radarr:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+    depends_on:
+     - vpn_transmission
+     - jackett
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+     - ${GLOB_VOL_LOCALTIME}
+     
+  sonarr:
+    environment:
+     - PUID=${GLOB_PUID} 
+     - PGID=${GLOB_PGID}
+    depends_on:
+     - vpn_transmission
+     - jackett
+    networks:
+     - media-network
+    restart: unless-stopped
+    volumes:
+    - ${GLOB_VOL_LOCALTIME}
+    
+  tautulli:
+    environment:
+     - PUID=${GLOB_PUID}
+     - PGID=${GLOB_PGID}
+     - TZ=${GLOB_TZ}
+    depends_on:
+     - plex
+    networks:
+     - media-network
+    restart: unless-stopped
+
+  traefik:
+    depends_on:
+     - plex
+     - ombi
+     - plexredirect
+    networks:
+     - media-network
+    restart: unless-stopped
+    
+  vpn_transmission:
+    environment:
+     - PUID=${GLOB_PUID} 
+     - PGID=${GLOB_PGID}
+     - TZ=${GLOB_TZ}
+    networks:
+     - media-network
+     
+   

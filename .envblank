@@ -1,0 +1,33 @@
+# Globals
+GLOB_PGID=1000
+GLOB_PUID=1000
+GLOB_TZ=<your time zone, e.g. America/New_York; https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>
+GLOB_VOL_LOCALTIME=/etc/localtime:/etc/localtime:ro
+
+# Volumes
+VOL_CONFIG=</root/path/to/config>
+VOL_PLEXREDIRECT=<root/path/to/config>/PlexRedirect
+
+# Plex
+PLEX_ALLOWED_NETWORKS=<IP/netmask of hosts to allow in w/o auth, e.g. 192.168.1.0/24>
+PLEX_CLAIM=<replace with info from https://www.plex.tv/claim/>
+PLEX_CONFIG=</root/path/to/config>/Plex/database
+PLEX_HOST_IP=<host machine IP, not Plex container IP>
+PLEX_TRANSCODE=</root/path/to/config>Plex/transcode
+
+# OpenVPN/Transmission
+PIA_CONFIGS=<comma separated list of OVPN configs>
+PIA_USERNAME=<PIA username>
+PIA_PASSWORD=<PIA password>
+OVPN_LOCAL_NETWORK=192.168.0.0/16
+TRAN_DOWNLOAD_DIR=/data/<name of download folder>
+TRAN_INCOMPLETE_DIR=/data/<name of incomplete folder>
+TRAN_WATCH_DIR=/data/<name of torrent black hold folder (if you want to use it)>
+
+# LetsEncrypt
+LE_EMAIL=<email for Let's Encrypt notifications>
+
+# Cloudflare
+CF_EMAIL=<cloudflare email>
+CF_TOKEN=<cloudflare API token>
+CF_DOMAIN=<your domain name, e.g. yourwebsite.com>
